@@ -1,11 +1,9 @@
 # Created by: Mateusz Piotrowski <0mp@FreeBSD.org>
-# $FreeBSD: head/sysutils/nix/Makefile 550026 2020-09-25 12:54:38Z 0mp $
 
 PORTNAME=	nix
-DISTVERSION=	2.3.7.9999
+DISTVERSION=	2.4
+PORTREVISION=	1
 CATEGORIES=	sysutils
-PATCH_SITES=	https://github.com/0mp/nix/commit/
-PATCHFILES=	56dc854fa1158b5920cfeefa690e087cf13db915.patch:-p1
 
 MAINTAINER=	0mp@FreeBSD.org
 COMMENT=	Purely functional package manager
@@ -15,22 +13,25 @@ LICENSE_FILE=	${WRKSRC}/COPYING
 
 BUILD_DEPENDS=	${LOCALBASE}/share/aclocal/ax_cxx_compile_stdcxx.m4:devel/autoconf-archive \
 		bash:shells/bash \
-		mdbook:textproc/mdbook \
+		docbook-xsl-ns>=0:textproc/docbook-xsl-ns \
 		gnustat:sysutils/coreutils \
 		grealpath:sysutils/coreutils \
-		jq:textproc/jq \
-		libarchive>=3.1.2:archivers/libarchive \
-		googletest>0:devel/googletest \
-		nlohmann-json>=3.9.1_2:devel/nlohmann-json
+		${LOCALBASE}/include/nlohmann/json_fwd.hpp:devel/nlohmann-json \
+		${LOCALBASE}/lib/liblowdown.a:textproc/lowdown \
+		mdbook:textproc/mdbook \
+		xmllint:textproc/libxml2 \
+		xsltproc:textproc/libxslt
 LIB_DEPENDS=	libaws-cpp-sdk-core.so:devel/aws-sdk-cpp \
 		libboost_context.so:devel/boost-libs \
 		libbrotlienc.so:archivers/brotli \
+		libcpuid.so:sysutils/libcpuid \
 		libcurl.so:ftp/curl \
 		libeditline.so:devel/editline \
 		libgc.so:devel/boehm-gc \
 		libsodium.so:security/libsodium
 TEST_DEPENDS=	dot:graphics/graphviz \
 		git:devel/git \
+		libgtest_main.so:devel/googletest \
 		gxargs:misc/findutils \
 		hg:devel/mercurial
 
@@ -38,7 +39,7 @@ USES=		autoreconf bison compiler:c++17-lang gmake localbase pkgconfig \
 		sqlite:3 ssl
 USE_GITHUB=	yes
 GH_ACCOUNT=	NixOS
-GH_TAGNAME=	7d81582
+GH_TAGNAME=	eab14a642cbcbc35f4473888d906f9de7deda07b
 USE_LDCONFIG=	yes
 
 HAS_CONFIGURE=		yes
